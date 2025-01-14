@@ -1,6 +1,12 @@
 require("dotenv").config();
 const dbConfig = require("./dbConfig");
-const { Sequelize, Model, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
+
+// Import models
+const karyawanModel = require("./main_model/01_KaryawanModel");
+const adminUserModel = require("./main_model/02_Admin_User");
+const gajianMasterModel = require("./main_model/03_kategori_gaji");
+const gajianDetailModel = require("./main_model/04_gaji_detail_model");
 
 // Create Connection Between Sequelize and Database (--> MySQL)
 const sequelize = new Sequelize(
@@ -18,13 +24,16 @@ const sequelize = new Sequelize(
 //   console.error("Unable to connect to the database:", error);
 // }
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.student = require("./main_model/01_student-model")(sequelize, DataTypes);
-
+const main_db = {
+  Sequelize: Sequelize,
+  sequelize: sequelize,
+  karyawan: karyawanModel(sequelize, DataTypes),
+  adminUser: adminUserModel(sequelize, DataTypes),
+  gajianMaster: gajianMasterModel(sequelize, DataTypes),
+  gajianDetail: gajianDetailModel(sequelize, DataTypes),
+};
 // Synchronize Sequelize Model and Actual Datatables in SQL
-db.sequelize
+main_db.sequelize
   .sync({ force: false })
   // .sync({ force: true }) // force sync --> remove old and create new
   //.sync({ alter: true }) // sync update --> update existing table only
@@ -38,4 +47,4 @@ db.sequelize
     }
   });
 
-module.exports = db;
+module.exports = main_db;

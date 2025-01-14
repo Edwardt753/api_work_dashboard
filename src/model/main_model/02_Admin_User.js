@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const student = sequelize.define(
-    "students",
+  const adminUser = sequelize.define(
+    "admin_user",
     {
       id: {
         primaryKey: true,
@@ -8,16 +8,17 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      fullname: {
-        type: DataTypes.STRING,
-      },
-      gender: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+      },
+      fullname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
@@ -28,5 +29,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  return student;
+  return adminUser;
 };
