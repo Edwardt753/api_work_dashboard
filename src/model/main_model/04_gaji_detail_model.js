@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSON,
         allowNull: false,
       },
-      harian_data: {
+      total_waktu: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

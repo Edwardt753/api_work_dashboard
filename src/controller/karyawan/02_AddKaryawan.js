@@ -16,7 +16,7 @@ async function AddKaryawan(req, res) {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal server error",
     });
