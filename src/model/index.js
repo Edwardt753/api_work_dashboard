@@ -7,6 +7,7 @@ const karyawanModel = require("./main_model/01_KaryawanModel");
 const adminUserModel = require("./main_model/02_Admin_User");
 const gajianMasterModel = require("./main_model/03_kategori_gaji");
 const gajianDetailModel = require("./main_model/04_gaji_detail_model");
+const tingkatgajiMasterModel = require("./main_model/05_tingkat_gaji_master");
 
 // Create Connection Between Sequelize and Database (--> MySQL)
 const sequelize = new Sequelize(
@@ -31,7 +32,15 @@ const main_db = {
   adminUser: adminUserModel(sequelize, DataTypes),
   gajianMaster: gajianMasterModel(sequelize, DataTypes),
   gajianDetail: gajianDetailModel(sequelize, DataTypes),
+  tingkatgajiMaster: tingkatgajiMasterModel(sequelize, DataTypes),
 };
+
+Object.keys(main_db).forEach((modelName) => {
+  if (main_db[modelName].associate) {
+    main_db[modelName].associate(main_db);
+  }
+});
+
 // Synchronize Sequelize Model and Actual Datatables in SQL
 main_db.sequelize
   .sync({ force: false })
@@ -40,9 +49,9 @@ main_db.sequelize
   .then(async () => {
     console.log("Synchronization completed.");
     // Call seeder file to seed the database based on .env conditional
-    if (process.env.SEED_DB === "TRUE") {
+    if (process.env.SEED_DB === "FALSE") {
       const seeder = require("./seeder");
-      await seeder.seedData(db);
+      await seeder.seedData(main_db);
       console.log("Seeder completed.");
     }
   });

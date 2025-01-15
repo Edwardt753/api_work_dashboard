@@ -29,5 +29,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  karyawan.associate = (models) => {
+    karyawan.belongsTo(models.tingkatgajiMaster, {
+      foreignKey: "tingkat_gaji",
+      as: "tingkatGaji", // Alias as a string
+    });
+  };
+
   return karyawan;
 };

@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      total_gaji: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       freezeTableName: true,

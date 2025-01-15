@@ -8,6 +8,7 @@ const ListKaryawanGajiID = async (req, res) => {
         id_gaji_master: id,
       },
     });
+
     // console.log("result : ", result);
 
     //conditional for findAll are stored in object or array so need to check length
