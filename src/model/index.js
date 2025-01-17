@@ -49,7 +49,7 @@ main_db.sequelize
   .then(async () => {
     console.log("Synchronization completed.");
     // Call seeder file to seed the database based on .env conditional
-    if (process.env.SEED_DB === "FALSE") {
+    if (process.env.SEED_DB === "TRUE") {
       const seeder = require("./seeder");
       await seeder.seedData(main_db);
       console.log("Seeder completed.");

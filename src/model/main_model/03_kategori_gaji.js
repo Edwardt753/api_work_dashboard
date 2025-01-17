@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       total_gaji: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

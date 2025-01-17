@@ -36,7 +36,7 @@ const AddGaji = async (req, res) => {
       karyawan_id: karyawan_id,
       total_waktu: total_waktu,
       harian_data: harian_data,
-      total_gaji: total_gaji,
+      gaji_personal: total_gaji,
     });
 
     return res.status(200).json({

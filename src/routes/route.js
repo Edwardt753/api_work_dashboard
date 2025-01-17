@@ -13,9 +13,13 @@ const UpdateKaryawan = require("../controller/karyawan/04_UpdateKaryawan");
 
 //Gaji
 const AddGaji = require("../controller/gajian/01_AddGaji");
-const ListKaryawanGajiID = require("../controller/gajian/02_ListGaji");
+const ListKaryawanGajiID = require("../controller/gajian/02_ListGajiMaster");
 const EditGajiDetail = require("../controller/gajian/03_EditGaji");
-const GetGajiDetails = require("../controller/gajian/04_GajiDetails");
+const GetGajiDetails = require("../controller/gajian/04_GajiMasterDetails");
+const AddGajimaster = require("../controller/gajian/06_AddGajiMaster");
+
+//calculate
+const JustCalculate = require("../controller/gajian/05_CalculateGaji");
 
 //Parameter endpoints
 route.get("/karyawan/:id", DetailKaryawan);
@@ -28,6 +32,10 @@ route.delete("/karyawan/:id", DeleteKaryawan);
 route.post("/gaji/:id", AddGaji);
 route.get("/gaji/:id", ListKaryawanGajiID);
 route.get("/gaji/:IGM/details/:KID", GetGajiDetails);
+route.post("/gajiadd", AddGajimaster);
+
+//calculate endpoints
+route.post("/calculate/:id", JustCalculate);
 
 //Auth
 route.post("/register", isRegister);

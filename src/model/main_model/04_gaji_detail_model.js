@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      total_gaji: {
+      gaji_personal: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
