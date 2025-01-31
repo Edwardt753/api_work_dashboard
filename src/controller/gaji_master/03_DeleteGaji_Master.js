@@ -1,33 +1,33 @@
-const db = require("../../model");
+const main_db = require("../../model");
 
-const DeleteKaryawan = async (req, res) => {
+const DeleteGajiMaster = async (req, res) => {
   const { id } = req.params;
+
   try {
-    const CheckKaryawan = await db.karyawan.findOne({
+    const checkData = await main_db.gajianMaster.findOne({
       where: {
         id: id,
         status: null,
       },
     });
 
-    if (!CheckKaryawan) {
+    if (!checkData) {
       return res.status(404).json({
         code: 404,
-        message: "Data Karyawan Not Found",
+        message: "Data Not Found",
         data: null,
       });
     }
 
-    await db.karyawan.destroy({
+    await main_db.gajianMaster.destroy({
       where: {
         id: id,
       },
     });
 
     return res.status(204).json({
-      code: 204,
       success: true,
-      message: "Karyawan berhasil di delete",
+      message: "Data berhasil di delete",
     });
   } catch (error) {
     res.status(500).json({
@@ -37,4 +37,4 @@ const DeleteKaryawan = async (req, res) => {
   }
 };
 
-module.exports = DeleteKaryawan;
+module.exports = DeleteGajiMaster;

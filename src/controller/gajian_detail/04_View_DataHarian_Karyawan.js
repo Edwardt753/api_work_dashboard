@@ -1,6 +1,6 @@
 const main_db = require("../../model");
 
-const GetGajiDetails = async (req, res) => {
+const GetDataHarian = async (req, res) => {
   const { IGM, KID } = req.params;
   try {
     const result = await main_db.gajianDetail.findOne({
@@ -32,4 +32,4 @@ const GetGajiDetails = async (req, res) => {
   }
 };
 
-module.exports = GetGajiDetails;
+module.exports = GetDataHarian;

@@ -5,7 +5,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 // Import models
 const karyawanModel = require("./main_model/01_KaryawanModel");
 const adminUserModel = require("./main_model/02_Admin_User");
-const gajianMasterModel = require("./main_model/03_kategori_gaji");
+const gajianMasterModel = require("./main_model/03_kategori_master");
 const gajianDetailModel = require("./main_model/04_gaji_detail_model");
 const tingkatgajiMasterModel = require("./main_model/05_tingkat_gaji_master");
 
@@ -43,7 +43,7 @@ Object.keys(main_db).forEach((modelName) => {
 
 // Synchronize Sequelize Model and Actual Datatables in SQL
 main_db.sequelize
-  .sync({ force: false })
+  .sync({ alter: true })
   // .sync({ force: true }) // force sync --> remove old and create new
   //.sync({ alter: true }) // sync update --> update existing table only
   .then(async () => {

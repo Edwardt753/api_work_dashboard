@@ -34,7 +34,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "tingkat_gaji",
       as: "tingkatGaji", // Alias as a string
     });
+    karyawan.hasMany(models.gajianDetail, {
+      foreignKey: "id",
+      as: "gajiDetail", // Alias as a string
+    });
   };
+
+  // karyawan.associate = (models) => {
+  //   karyawan.hasMany(models.gajianDetail, {
+  //     foreignKey: "id",
+  //     as: "gajiDetail", // Alias as a string
+  //   });
+  // };
 
   return karyawan;
 };

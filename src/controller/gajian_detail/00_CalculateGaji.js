@@ -2,15 +2,17 @@ const main_db = require("../../model");
 
 const CalculateTotalGaji = async (req, res) => {
   const { id } = req.params;
+  // const list = req.body;
+  // console.log("list : ", list);
 
-  //   const getValue = Object.values(sum_data);
-  //   if (!getValue.every((value) => typeof value === "number")) {
-  //     return res.status(400).json({
-  //       code: 400,
-  //       message: "Value harus number",
-  //       data: null,
-  //     });
-  //   }
+  // const getValue = Object.values(list);
+  // if (!getValue.every((value) => typeof value === "number")) {
+  //   return res.status(400).json({
+  //     code: 400,
+  //     message: "Value harus number",
+  //     data: null,
+  //   });
+  // }
 
   //looping making array into 1 output
   //receive 2 input, |currentvalue| and |the array 1 by 1|
@@ -18,14 +20,14 @@ const CalculateTotalGaji = async (req, res) => {
 
   try {
     //THIS RETEURN ARRAY OF OBJECT
-    const getValue2 = await main_db.gajianDetail.findAll({
+    const getValue = await main_db.gajianDetail.findAll({
       where: {
         id_gaji_master: id,
       },
       attributes: ["gaji_personal"],
     });
-
-    const newSumValue = getValue2.reduce(
+    console.log(getValue);
+    const newSumValue = getValue.reduce(
       (total, item) => total + item.dataValues.gaji_personal,
       0
     );

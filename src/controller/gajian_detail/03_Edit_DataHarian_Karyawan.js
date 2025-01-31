@@ -1,7 +1,7 @@
 const main_db = require("../../model");
 
-const EditGajiDetail = async (req, res) => {
-  //id_gajian_master & Karyawan ID
+const EditDataHarian = async (req, res) => {
+  //Id_Gajian_Master & Karyawan ID
   const { IGM, KID } = req.params;
   const { harian_data } = req.body;
   let total_waktu =
@@ -42,4 +42,4 @@ const EditGajiDetail = async (req, res) => {
   }
 };
 
-module.exports = EditGajiDetail;
+module.exports = EditDataHarian;

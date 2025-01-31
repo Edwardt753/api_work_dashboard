@@ -1,12 +1,13 @@
 const main_db = require("../../model");
 
-const ListKaryawanGajiID = async (req, res) => {
+const ListGajiKaryawan = async (req, res) => {
   const { id } = req.params;
   try {
     const result = await main_db.gajianDetail.findAll({
       where: {
         id_gaji_master: id,
       },
+      include: [{ model: main_db.karyawan, as: "karyawan" }],
     });
 
     // console.log("result : ", result);
@@ -23,7 +24,7 @@ const ListKaryawanGajiID = async (req, res) => {
     return res.status(200).json({
       success: true,
       code: 200,
-      message: result,
+      data: result,
     });
   } catch (error) {
     // console.log(error);
@@ -34,4 +35,4 @@ const ListKaryawanGajiID = async (req, res) => {
   }
 };
 
-module.exports = ListKaryawanGajiID;
+module.exports = ListGajiKaryawan;

@@ -1,6 +1,6 @@
 const main_db = require("../../model");
 
-const AddGaji = async (req, res) => {
+const AddDataGajiHarian = async (req, res) => {
   const { karyawan_id, harian_data } = req.body;
   // console.log("harian data :", harian_data);
   const { id } = req.params;
@@ -26,6 +26,30 @@ const AddGaji = async (req, res) => {
         },
       }
     );
+
+    if (!KaryawanWithGaji) {
+      return res.status(404).json({
+        code: 404,
+        message: "Data not found",
+        data: false,
+      });
+    }
+
+    //Check data, kalo id master dan karyawan exist maka error(tidak bisa double)
+    const checkDouble = await main_db.gajianDetail.findOne({
+      where: {
+        karyawan_id: karyawan_id,
+        id_gaji_master: id,
+      },
+    });
+
+    if (checkDouble) {
+      return res.status(400).json({
+        code: 400,
+        message: "Cannot input same karyawan data",
+        data: false,
+      });
+    }
 
     // console.log(KaryawanWithGaji.tingkatGaji);
 
@@ -53,4 +77,4 @@ const AddGaji = async (req, res) => {
   }
 };
 
-module.exports = AddGaji;
+module.exports = AddDataGajiHarian;

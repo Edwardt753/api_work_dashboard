@@ -37,5 +37,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  gajianDetailModel.associate = (models) => {
+    gajianDetailModel.belongsTo(models.karyawan, {
+      foreignKey: "karyawan_id",
+      as: "karyawan", // Alias as a string
+    });
+  };
+
   return gajianDetailModel;
 };
