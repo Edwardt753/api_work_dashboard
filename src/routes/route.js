@@ -3,6 +3,8 @@ const route = express.Router();
 
 const isRegister = require("../auth/register");
 const isLogin = require("../auth/login");
+const VerifLogin = require("../auth/veriflogin.js");
+const refreshToken = require("../auth/refresh_token.js");
 
 //Karyawan
 const ListKaryawan = require("../controller/karyawan/01_ListKaryawan");
@@ -25,37 +27,44 @@ const DeleteHarianKaryawan = require("../controller/gajian_detail/05_Delete_Data
 
 //Kategori master
 const GetAllKategory = require("../controller/kategori_gaji/01_ListAllKategory.js");
+const AddNewKategory = require("../controller/kategori_gaji/02_Add_Kategory.js");
+const EditKategory = require("../controller/kategori_gaji/03_Edit_Kategory.js");
+const DeleteKategory = require("../controller/kategori_gaji/04_DeleteKategory.js");
 
 //calculate
 const JustCalculate = require("../controller/gajian_detail/00_CalculateGaji");
 
 //Parameter endpoints
-route.get("/karyawan/:id", DetailKaryawan);
-route.get("/karyawan", ListKaryawan);
-route.post("/karyawan", AddKaryawan);
-route.put("/karyawan/:id", UpdateKaryawan);
-route.delete("/karyawan/:id", DeleteKaryawan);
+route.get("/karyawan/:id", VerifLogin, DetailKaryawan);
+route.get("/karyawan", VerifLogin, ListKaryawan);
+route.post("/karyawan", VerifLogin, AddKaryawan);
+route.put("/karyawan/:id", VerifLogin, UpdateKaryawan);
+route.delete("/karyawan/:id", VerifLogin, DeleteKaryawan);
 
 //Gaji Master
-route.post("/master/gaji/add", AddGajimaster);
-route.get("/master/gaji", ListGajiMaster);
-route.put("/master/gaji/delete/:id", DeleteGajiMaster);
+route.post("/master/gaji/add", VerifLogin, AddGajimaster);
+route.get("/master/gaji", VerifLogin, ListGajiMaster);
+route.put("/master/gaji/delete/:id", VerifLogin, DeleteGajiMaster);
 
 //Gaji Endpoints
-route.post("/gaji/:id", AddDataGajiHarian);
-route.get("/gaji/:id", ListGajiKaryawan);
-route.delete("/gaji/delete/:IGM/:KID", DeleteHarianKaryawan);
+route.post("/gaji/:id", VerifLogin, AddDataGajiHarian);
+route.get("/gaji/:id", VerifLogin, ListGajiKaryawan);
+route.delete("/gaji/delete/:IGM/:KID", VerifLogin, DeleteHarianKaryawan);
 // route.get("/gaji/:IGM/details/:KID", GetGajiDetails);
 
 //calculate endpoints
-route.post("/calculate/:id", JustCalculate);
+route.post("/calculate/:id", VerifLogin, JustCalculate);
 
 //Kategory Gaji
-route.get("/kategori/list", GetAllKategory);
+route.get("/kategori/list", VerifLogin, GetAllKategory);
+route.post("/kategori/add", VerifLogin, AddNewKategory);
+route.put("/kategori/edit/:id", VerifLogin, EditKategory);
+route.delete("/kategori/delete/:id", VerifLogin, DeleteKategory);
 
 //Auth
-route.post("/register", isRegister);
+route.post("/register", VerifLogin, isRegister);
 route.post("/login", isLogin);
+route.get("/refreshtoken", refreshToken);
 
 //export routing
 module.exports = route;

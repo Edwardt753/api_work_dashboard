@@ -13,13 +13,13 @@ const ListGajiKaryawan = async (req, res) => {
     // console.log("result : ", result);
 
     //conditional for findAll are stored in object or array so need to check length
-    if (!result || result.length === 0) {
-      return res.status(404).json({
-        success: false,
-        code: 404,
-        message: "Data not found",
-      });
-    }
+    // if (!result || result.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     code: 404,
+    //     message: "Data not found",
+    //   });
+    // }
 
     return res.status(200).json({
       success: true,

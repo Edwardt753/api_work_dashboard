@@ -1,40 +1,33 @@
 const main_db = require("../../model");
 
-const DeleteGajiMaster = async (req, res) => {
+const DeleteKategory = async (req, res) => {
   const { id } = req.params;
-
   try {
-    const checkData = await main_db.gajianMaster.findOne({
+    const result = await main_db.tingkatgajiMaster.destroy({
       where: {
         id: id,
-        status: null,
       },
     });
 
-    if (!checkData) {
+    if (!result) {
       return res.status(404).json({
         code: 404,
-        message: "Data Not Found",
+        message: "Data tidak ditemukan",
         data: null,
       });
     }
 
-    await main_db.gajianMaster.destroy({
-      where: {
-        id: id,
-      },
-    });
-
     return res.status(200).json({
+      code: 200,
       success: true,
-      message: "Data berhasil di delete",
+      message: "Data berhasil dihapus",
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal server error",
     });
   }
 };
 
-module.exports = DeleteGajiMaster;
+module.exports = DeleteKategory;

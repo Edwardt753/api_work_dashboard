@@ -1,9 +1,13 @@
 const main_db = require("../../model");
 
 const AddDataGajiHarian = async (req, res) => {
-  const { karyawan_id, harian_data } = req.body;
+  const body = req.body;
+  // console.log(body);
+  const { karyawan_id, harian_data } = body;
   // console.log("harian data :", harian_data);
   const { id } = req.params;
+  // console.log("karyawan id : ", karyawan_id);
+  // console.log("gaji_master id : ", id);
 
   let total_waktu =
     harian_data.senin +
@@ -16,16 +20,12 @@ const AddDataGajiHarian = async (req, res) => {
   // console.log("total waktu :  ", total_waktu);
 
   try {
-    const KaryawanWithGaji = await main_db.karyawan.findOne(
-      {
-        include: [{ model: main_db.tingkatgajiMaster, as: "tingkatGaji" }],
+    const KaryawanWithGaji = await main_db.karyawan.findOne({
+      include: [{ model: main_db.tingkatgajiMaster, as: "tingkatGaji" }],
+      where: {
+        id: karyawan_id,
       },
-      {
-        where: {
-          karyawan_id: karyawan_id,
-        },
-      }
-    );
+    });
 
     if (!KaryawanWithGaji) {
       return res.status(404).json({
@@ -51,7 +51,7 @@ const AddDataGajiHarian = async (req, res) => {
       });
     }
 
-    // console.log(KaryawanWithGaji.tingkatGaji);
+    // console.log(KaryawanWithGaji.tingkatGaji.dataValues);
 
     let total_gaji = total_waktu * KaryawanWithGaji.tingkatGaji.harga_tingkat;
 

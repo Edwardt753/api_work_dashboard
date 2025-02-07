@@ -1,46 +1,51 @@
 const bcrypt = require("bcrypt");
-const db = require("../model/index");
+const main_db = require("../model/index");
 
 const IsRegister = async (req, res) => {
-  const { fullname, email, password } = req.body;
+  const body = req.body;
+  const { username, fullname, password } = body;
+  console.log(body);
 
   try {
-    const [admin, created] = await db.adminUser.findOrCreate({
+    const CheckUsername = await main_db.adminUser.findOne({
       where: {
-        email: email,
-      },
-      defaults: {
-        email: email,
-        fullname: fullname,
-        password: await bcrypt.hash(password, 10),
+        username: username,
       },
     });
+    console.log(CheckUsername);
 
-    console.log(admin);
-
-    if (!created) {
+    if (CheckUsername) {
       return res.status(404).json({
         code: 404,
-        message: "Email already exist",
+        message: "username already exist",
         status: false,
       });
     }
+
+    const CryptedPass = await bcrypt.hash(password, 4);
+
+    const result = await main_db.adminUser.create({
+      username: username,
+      fullname: fullname,
+      password: CryptedPass,
+    });
 
     return res.status(201).json({
       code: 201,
       message: "Success Create Account",
       payload: {
-        id: admin.dataValues.id,
-        email: admin.dataValues.email,
-        fullname: admin.dataValues.fullname,
-        created_at: admin.dataValues.createdAt,
-        updated_at: admin.dataValues.updatedAt,
+        id: result.id,
+        username: result.username,
+        fullname: result.fullname,
+        created_at: result.createdAt,
+        updated_at: result.updatedAt,
       },
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       status: false,
-      message: "Email already exists!",
+      message: "username already exists!",
     });
   }
 };

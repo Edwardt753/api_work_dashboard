@@ -1,15 +1,70 @@
 const jwt = require("jsonwebtoken");
-const db = require("../model/index");
+const main_db = require("../model/index");
 
 const VerifLogin = async (req, res, next) => {
-  const checkCookies = req.cookies.jwtToken;
+  const token = req.headers["authorization"];
 
-  if (!checkCookies) {
+  if (!token) {
     return res.status(401).json({
       error: "Unauthorized: No token provided",
     });
   }
+  const parseToken = token.split(" ")[1];
+  const secret_token = process.env.ACCESS_TOKEN_SECRET;
 
   try {
-  } catch (error) {}
+    if (!parseToken) {
+      return res.status(401).json({
+        error: "Unauthorized: No token provided",
+      });
+    }
+
+    let payload;
+    try {
+      payload = jwt.verify(parseToken, secret_token);
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        return res.status(401).json({
+          error: "Unauthorized: Token has expired",
+        });
+      } else if (error instanceof jwt.JsonWebTokenError) {
+        return res.status(401).json({
+          error: "Unauthorized: Invalid token",
+        });
+      } else if (error instanceof jwt.NotBeforeError) {
+        return res.status(401).json({
+          error: "Unauthorized: Token not active yet",
+        });
+      } else {
+        return res.status(500).json({
+          error: "Internal server error during token verification",
+        });
+      }
+    }
+
+    // console.log("payload :", payload);
+
+    const checkCookie = await main_db.adminUser.findOne({
+      where: {
+        id: payload.id,
+        username: payload.username,
+      },
+    });
+
+    if (!checkCookie) {
+      return res.status(401).json({
+        error: "Unauthorized: Wrong Token Data",
+      });
+    }
+
+    await next();
+  } catch (error) {
+    console.error("Unexpected Error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
 };
+
+module.exports = VerifLogin;

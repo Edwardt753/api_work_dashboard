@@ -17,7 +17,7 @@ const AddGajimaster = async (req, res) => {
     if (checkData) {
       return res.status(409).json({
         code: 409,
-        message: "Data Already exist cannot add more",
+        message: "Data Sudah Ada atau Sudah Dibuat",
         data: null,
       });
     }

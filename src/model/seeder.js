@@ -1,7 +1,9 @@
 const tingkat_gaji_list = [
-  { id: 1, harga_tingkat: 120000 },
-  { id: 2, harga_tingkat: 70000 },
-  { id: 3, harga_tingkat: 75000 },
+  { id: 1, harga_tingkat: 140000 },
+  { id: 2, harga_tingkat: 120000 },
+  { id: 3, harga_tingkat: 80000 },
+  { id: 4, harga_tingkat: 75000 },
+  { id: 5, harga_tingkat: 70000 },
 ];
 
 // Function to seed the database
