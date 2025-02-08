@@ -14,12 +14,21 @@ app.use(express.json()); // Middleware (for parsing JSON data)
 app.use(morgan("dev")); //Logging settings
 
 app.use(cookieParser());
+
+const allowedOrigins = process.env.CLIENT_URL;
 // Cors Setting
-if (process.env.NODE_ENV !== "development") {
-  app.use(cors({ origin: `${process.env.CLIENT_URL}`, credentials: true }));
-} else {
-  app.use(cors());
-}
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 // Default Welcome Message
 app.get("/", (req, res) => {
@@ -27,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 //Main Routing
-const route = require("./routes/route");
+const route = require("./src/routes/route");
 app.use("/", route);
 
 // Error catcher
