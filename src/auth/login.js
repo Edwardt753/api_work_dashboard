@@ -70,8 +70,9 @@ const isLogin = async (req, res) => {
     );
 
     res.cookie("refreshtoken", refresh_token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 10, //set cookie duration
+      httpOnly: true, // Prevent JavaScript access
+      // secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // Corrected to milliseconds
     });
 
     return res.json({

@@ -15,18 +15,13 @@ app.use(morgan("dev")); //Logging settings
 
 app.use(cookieParser());
 
-const allowedOrigins = process.env.CLIENT_URL;
 // Cors Setting
+const allowedOrigin = process.env.CLIENT_URL; // Single string
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
+    origin: allowedOrigin, // Directly pass the string
+    credentials: true, // Allow cookies and authorization headers
   })
 );
 

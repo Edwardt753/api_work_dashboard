@@ -66,7 +66,7 @@ route.delete("/kategori/delete/:id", VerifLogin, DeleteKategory);
 route.post("/register", VerifLogin, isRegister);
 route.post("/login", isLogin);
 route.get("/refreshtoken", refreshToken);
-route.get("/logout", isLogOut);
+route.delete("/logout", isLogOut);
 
 //export routing
 module.exports = route;
