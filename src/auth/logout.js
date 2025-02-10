@@ -4,6 +4,7 @@ const main_db = require("../model/index");
 const isLogOut = async (req, res) => {
   const token = req.headers["authorization"];
 
+  console.log(token);
   if (!token) {
     return res.status(401).json({
       error: "Unauthorized: No token provided",
