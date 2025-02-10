@@ -5,6 +5,7 @@ const isRegister = require("../auth/register");
 const isLogin = require("../auth/login");
 const VerifLogin = require("../auth/veriflogin.js");
 const refreshToken = require("../auth/refresh_token.js");
+const isLogOut = require("../auth/logout.js");
 
 //Karyawan
 const ListKaryawan = require("../controller/karyawan/01_ListKaryawan");
@@ -65,6 +66,7 @@ route.delete("/kategori/delete/:id", VerifLogin, DeleteKategory);
 route.post("/register", VerifLogin, isRegister);
 route.post("/login", isLogin);
 route.get("/refreshtoken", refreshToken);
+route.get("/logout", isLogOut);
 
 //export routing
 module.exports = route;
