@@ -4,7 +4,7 @@ const AddDataGajiHarian = async (req, res) => {
   const body = req.body;
   // console.log(body);
   const { karyawan_id, harian_data } = body;
-  // console.log("harian data :", harian_data);
+  console.log("harian data :", harian_data);
   const { id } = req.params;
   // console.log("karyawan id : ", karyawan_id);
   // console.log("gaji_master id : ", id);
@@ -53,7 +53,9 @@ const AddDataGajiHarian = async (req, res) => {
 
     // console.log(KaryawanWithGaji.tingkatGaji.dataValues);
 
-    let total_gaji = total_waktu * KaryawanWithGaji.tingkatGaji.harga_tingkat;
+    let total_gaji =
+      total_waktu * KaryawanWithGaji.tingkatGaji.harga_tingkat -
+      harian_data.kasbon;
 
     const result = await main_db.gajianDetail.create({
       id_gaji_master: id,
